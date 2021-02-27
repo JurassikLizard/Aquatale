@@ -46,13 +46,13 @@ public class Aquatale extends GameApplication {
         Circle e = new Circle(2*center.x,2*center.y,100, Color.BLACK);
         Shape flashlight = Shape.subtract(r, e);
 
-        player = FXGL.entityBuilder()
-                .at(Utils.getRectangleCenterPosition(center.x, center.y, rectangle))
-                .view(rectangle)
-                .buildAndAttach();
         light = FXGL.entityBuilder()
                 .at(Utils.getRectangleCenterPosition(center.x, center.y, r))
                 .view(flashlight)
+                .buildAndAttach();
+        player = FXGL.entityBuilder()
+                .at(Utils.getRectangleCenterPosition(center.x, center.y, rectangle))
+                .view(rectangle)
                 .buildAndAttach();
 
         FXGL.getGameScene().setCursor(Cursor.DEFAULT);
