@@ -11,7 +11,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import me.jurassiklizard.aquatale.enums.MoveDirection;
 import me.jurassiklizard.aquatale.utils.BoundingBox;
 import me.jurassiklizard.aquatale.utils.Utils;
@@ -38,15 +40,18 @@ public class Aquatale extends GameApplication {
     protected void initGame() {
         instance = this;
         Rectangle rectangle = new Rectangle(25, 25, Color.BLUE);
-        Rectangle r = new Rectangle(100, 100, Color.BLACK);
         Vec2 center = Utils.getCenterScreen();
+        Rectangle r = new Rectangle(FXGL.getAppWidth()*2, FXGL.getAppHeight()*2);
+        Circle e = new Circle(2*center.x,2*center.y,100, Color.BLACK);
+        Shape flashlight = Shape.subtract(r, e);
+
         player = FXGL.entityBuilder()
                 .at(Utils.getRectangleCenterPosition(center.x, center.y, rectangle))
                 .view(rectangle)
                 .buildAndAttach();
         light = FXGL.entityBuilder()
                 .at(Utils.getRectangleCenterPosition(center.x, center.y, r))
-                .view(r)
+                .view(flashlight)
                 .buildAndAttach();
 
         FXGL.getGameScene().setCursor(Cursor.DEFAULT);
@@ -80,6 +85,7 @@ public class Aquatale extends GameApplication {
 
     @Override
     protected void onUpdate(double tpf){
+
         Input input = FXGL.getInput();
         Point2D pos = input.getMousePositionWorld();
         Vec2 centerPos = Utils.getRectangleCenterPosition(pos.getX(), pos.getY(), entityViews.get(light));
