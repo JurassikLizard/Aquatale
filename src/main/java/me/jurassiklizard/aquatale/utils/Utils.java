@@ -3,7 +3,6 @@ package me.jurassiklizard.aquatale.utils;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import me.jurassiklizard.aquatale.Aquatale;
 import me.jurassiklizard.aquatale.enums.MoveDirection;
@@ -16,10 +15,15 @@ public class Utils {
      * Gets the location at the center of the given rectangle
      * @param x The location of the object on the x coordinate-plane
      * @param y The location of the object on the y coordinate-plane
-     * @param recWidth The width of the rectangle
-     * @param recHeight The height of the rectangle
+     * @param box The bounding box of the entity
      */
-    public static Vec2 getRectangleCenterPosition(float x, float y, float recWidth, float recHeight){
+    public static Vec2 getRectangleCenterPosition(double x, double y, BoundingBox box){
+        x -= box.getWidth() / 2.0;
+        y -= box.getHeight() / 2.0;
+        return new Vec2(x, y);
+    }
+
+    public static Vec2 getRectangleCenterPosition(double x, double y, double recWidth, double recHeight){
         x -= recWidth / 2.0;
         y -= recHeight / 2.0;
         return new Vec2(x, y);
@@ -31,7 +35,7 @@ public class Utils {
      * @param y The location of the object on the y coordinate-plane
      * @param rectangle The rectangle of whos location you want to get the center of
      */
-    public static Vec2 getRectangleCenterPosition(float x, float y, Rectangle rectangle){
+    public static Vec2 getRectangleCenterPosition(double x, double y, Rectangle rectangle){
         x -= rectangle.getWidth() / 2.0;
         y -= rectangle.getHeight() / 2.0;
         return new Vec2(x, y);

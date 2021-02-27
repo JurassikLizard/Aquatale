@@ -76,8 +76,9 @@ public class Aquatale extends GameApplication {
     @Override
     protected void onUpdate(double tpf){
         Input input = FXGL.getInput();
-        Point2D pos =  input.getMousePositionWorld();
-        light.setPosition(pos);
+        Point2D pos = input.getMousePositionWorld();
+        Vec2 centerPos = Utils.getRectangleCenterPosition(pos.getX(), pos.getY(), entityViews.get(light));
+        light.setPosition(centerPos);
     }
 
     public static void main(String[] args) { launch(args); }
