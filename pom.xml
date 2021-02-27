@@ -33,7 +33,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>Aquatale</mainClass>
+                            <mainClass>me.jurassiklizard.aquatale.Aquatale</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
