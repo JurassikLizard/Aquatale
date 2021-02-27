@@ -8,18 +8,19 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import me.jurassiklizard.aquatale.enums.MoveDirection;
+import me.jurassiklizard.aquatale.utils.BoundingBox;
+import me.jurassiklizard.aquatale.utils.Utils;
 
 import java.util.HashMap;
 
 public class Aquatale extends GameApplication {
     private Entity player;
     private Entity light;
-    private HashMap<Entity, Node> entityViews = new HashMap<>();
+    private HashMap<Entity, BoundingBox> entityViews = new HashMap<>();
     public static Aquatale instance;
 
     @Override
@@ -49,9 +50,8 @@ public class Aquatale extends GameApplication {
 
         FXGL.getGameScene().setCursor(Cursor.DEFAULT);
         FXGL.getGameScene().setBackgroundRepeat("background.png");
-        entityViews.put(player, rectangle);
-        entityViews.put(light, r);
-
+        entityViews.put(player, new BoundingBox(rectangle.getWidth(), rectangle.getHeight()));
+        entityViews.put(light, new BoundingBox(r.getWidth(), r.getHeight()));
     }
 
     @Override
@@ -71,12 +71,13 @@ public class Aquatale extends GameApplication {
         FXGL.onKey(KeyCode.S, () -> {
             Utils.move(player, MoveDirection.DOWN); // move down 5 pixels
         });
+    }
 
-        FXGL.onKey(KeyCode.SPACE, () -> {
-            Input input = FXGL.getInput();
-            Point2D pos =  input.getMousePositionWorld();
-            light.setPosition(pos); // Update mouse cursor position for flashlight
-        });
+    @Override
+    protected void onUpdate(double tpf){
+        Input input = FXGL.getInput();
+        Point2D pos =  input.getMousePositionWorld();
+        light.setPosition(pos);
     }
 
     public static void main(String[] args) { launch(args); }
@@ -99,11 +100,11 @@ public class Aquatale extends GameApplication {
         return this;
     }
 
-    public HashMap<Entity, Node> getEntityViews() {
+    public HashMap<Entity, BoundingBox> getEntityViews() {
         return entityViews;
     }
 
-    public Aquatale setEntityViews(HashMap<Entity, Node> entityViews) {
+    public Aquatale setEntityViews(HashMap<Entity, BoundingBox> entityViews) {
         this.entityViews = entityViews;
         return this;
     }

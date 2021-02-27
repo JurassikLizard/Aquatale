@@ -1,10 +1,12 @@
-package me.jurassiklizard.aquatale;
+package me.jurassiklizard.aquatale.utils;
 
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
+import me.jurassiklizard.aquatale.Aquatale;
+import me.jurassiklizard.aquatale.enums.MoveDirection;
 
 public class Utils {
     private static int moveDistance = 5;
@@ -74,10 +76,8 @@ public class Utils {
     }
 
     public static boolean isOutsideScreenRight(Entity entity){
-        Node node = main.getEntityViews().get(entity);
-        if(!(node instanceof Rectangle)) return true;
-        Rectangle rec = (Rectangle) node;
-        double width = rec.getWidth();
+        BoundingBox box = main.getEntityViews().get(entity);
+        double width = box.getWidth();
         double x = entity.getX() + width;
         if(x > FXGL.getGameScene().getAppWidth() || x + moveDistance > FXGL.getGameScene().getAppWidth())
             return true;
@@ -85,10 +85,8 @@ public class Utils {
     }
 
     public static boolean isOutsideScreenDown(Entity entity){
-        Node node = main.getEntityViews().get(entity);
-        if(!(node instanceof Rectangle)) return true;
-        Rectangle rec = (Rectangle) node;
-        double height = rec.getHeight();
+        BoundingBox box = main.getEntityViews().get(entity);
+        double height = box.getHeight();
         double y = entity.getY() + height;
         if(y > FXGL.getGameScene().getAppHeight() || y + moveDistance > FXGL.getGameScene().getAppHeight())
             return true;
