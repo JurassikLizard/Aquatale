@@ -20,9 +20,9 @@ public class Aquatale extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(800);
-        gameSettings.setHeight(600);
-        gameSettings.setTitle("me.jurassiklizard.aquatale.Aquatale");
+        gameSettings.setWidth(960);
+        gameSettings.setHeight(540);
+        gameSettings.setTitle("Aquatale");
         gameSettings.setVersion("0.1");
         gameSettings.setIntroEnabled(false);
     }
@@ -37,6 +37,7 @@ public class Aquatale extends GameApplication {
                 .view(rectangle)
                 .buildAndAttach();
         FXGL.getGameScene().setCursor(Cursor.DEFAULT);
+        FXGL.getGameScene().setBackgroundRepeat("background.png");
         entityViews.put(player, rectangle);
     }
 
