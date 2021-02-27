@@ -2,6 +2,7 @@ package me.jurassiklizard.aquatale;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
@@ -52,6 +53,10 @@ public class Aquatale extends GameApplication {
         FXGL.getGameScene().setBackgroundRepeat("background.png");
         entityViews.put(player, new BoundingBox(rectangle.getWidth(), rectangle.getHeight()));
         entityViews.put(light, new BoundingBox(r.getWidth(), r.getHeight()));
+
+        // Sound
+        Music music = FXGL.getAssetLoader().loadMusic("watery_cave.mp3");
+        FXGL.getAudioPlayer().loopMusic(music);
     }
 
     @Override
