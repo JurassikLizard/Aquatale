@@ -9,6 +9,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -60,7 +61,7 @@ public class Aquatale extends GameApplication {
         entityViews.put(light, new BoundingBox(r.getWidth(), r.getHeight()));
 
         // Sound
-        Music music = FXGL.getAssetLoader().loadMusic("watery_cave.mp3");
+        Music music = FXGL.getAssetLoader().loadMusic("piano_bass.mp3");
         FXGL.getAudioPlayer().loopMusic(music);
     }
 
@@ -91,6 +92,8 @@ public class Aquatale extends GameApplication {
         Vec2 centerPos = Utils.getRectangleCenterPosition(pos.getX(), pos.getY(), entityViews.get(light));
         light.setPosition(centerPos);
     }
+
+
 
     public static void main(String[] args) { launch(args); }
 
