@@ -1,0 +1,9 @@
+me\jurassiklizard\aquatale\enums\FishType.class
+me\jurassiklizard\aquatale\utils\BoundingBox.class
+me\jurassiklizard\aquatale\Aquatale$AquataleFactory.class
+me\jurassiklizard\aquatale\components\FishAnimationComponent.class
+me\jurassiklizard\aquatale\components\PlayerAnimationComponent.class
+me\jurassiklizard\aquatale\utils\Utils.class
+me\jurassiklizard\aquatale\Aquatale$EntityType.class
+me\jurassiklizard\aquatale\Aquatale.class
+me\jurassiklizard\aquatale\enums\MoveDirection.class

@@ -53,22 +53,22 @@ public class PlayerAnimationComponent extends Component {
     }
 
     public void moveRight() {
-        speed.x = 50;
+        speed.x = 75;
 
         getEntity().setScaleX(1);
     }
 
     public void moveLeft() {
-        speed.x = -50;
+        speed.x = -75;
 
         getEntity().setScaleX(-1);
     }
 
     public void moveUp(){
-        speed.y = -50;
+        speed.y = -75;
     }
 
     public void moveDown(){
-        speed.y = 50;
+        speed.y = 75;
     }
 }

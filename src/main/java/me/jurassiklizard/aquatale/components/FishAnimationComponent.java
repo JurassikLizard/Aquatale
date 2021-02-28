@@ -24,17 +24,17 @@ public class FishAnimationComponent extends Component {
     public FishAnimationComponent(boolean swimsRight){
         int random = new Random().nextInt(4);
         if(random == 1){
-            speed = 50;
+            speed = 70;
             animSwim = new AnimationChannel(FXGL.image("fish.png"), 4, 32, 32, Duration.seconds(1), 0, 3);
             type = FishType.REGULAR;
         }
         else if(random == 2){
-            speed = 50;
+            speed = 65;
             animSwim = new AnimationChannel(FXGL.image("fish-big.png"), 4, 54, 49, Duration.seconds(1), 0, 3);
             type = FishType.BIG;
         }
         else{
-            speed = 75;
+            speed = 80;
             animSwim = new AnimationChannel(FXGL.image("fish-dart.png"), 4, 39, 20, Duration.seconds(1), 0, 3);
             type = FishType.DART;
         }

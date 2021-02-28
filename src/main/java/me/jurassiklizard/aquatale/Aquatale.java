@@ -12,13 +12,17 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import me.jurassiklizard.aquatale.components.PlayerAnimationComponent;
 import me.jurassiklizard.aquatale.enums.MoveDirection;
@@ -39,6 +43,8 @@ public class Aquatale extends GameApplication {
     public static Aquatale instance;
     public int multiplier = 3;
     private boolean collided = false;
+    public int fishAmount = 0;
+    public Text fishText;
 
     public enum EntityType {
         PLAYER, ENEMY, FISH
@@ -46,7 +52,7 @@ public class Aquatale extends GameApplication {
     public static class AquataleFactory implements EntityFactory {
         @Spawns("player")
         public Entity newPlayer(SpawnData data) {
-            var rectangle = new Rectangle(25, 25, Color.TRANSPARENT);
+            var rectangle = new Rectangle(70, 70, Color.TRANSPARENT);
 
             return entityBuilder()
                     .type(EntityType.PLAYER)
@@ -119,16 +125,31 @@ public class Aquatale extends GameApplication {
         // Sound
         Music music = FXGL.getAssetLoader().loadMusic("piano_bass.mp3");
         FXGL.getAudioPlayer().loopMusic(music);
+
+        // UI
+        String fishString = fishAmount + " fish in your net";
+        Text testPosTest = FXGL.addText(fishString, -100, -100);
+        Bounds bounds = testPosTest.getLayoutBounds();
+        Vec2 textLocation = Utils.getRectangleCornerPosition(FXGL.getAppWidth() / 2.0, FXGL.getAppHeight() - 10, bounds.getWidth(), bounds.getHeight());
+        testPosTest.setText("");
+        fishText = FXGL.addText(fishString, textLocation.x, textLocation.y);
+        fishText.setTextOrigin(VPos.BOTTOM);
+        fishText.setFill(Color.WHITE);
+        fishText.setTextAlignment(TextAlignment.CENTER);
     }
 
     @Override
     protected void initPhysics() {
         onCollisionBegin(EntityType.PLAYER, EntityType.ENEMY, (player, enemy) -> {
             enemy.removeFromWorld();
+            fish.remove(enemy);
             collided = true;
+            fishAmount = 0;
         });
         onCollisionBegin(EntityType.PLAYER, EntityType.FISH, (player, fish) -> {
             fish.removeFromWorld(); // Remove fish object that collided with player
+            this.fish.remove(fish);
+            fishAmount++;
         });
     }
 
@@ -167,6 +188,7 @@ public class Aquatale extends GameApplication {
     protected void onUpdate(double tpf){
         Utils.spawnFish(tpf);
         Utils.updateFlashLights();
+        fishText.setText(fishAmount + " fish in your net!");
         if(collided)
         {
             collided = false;

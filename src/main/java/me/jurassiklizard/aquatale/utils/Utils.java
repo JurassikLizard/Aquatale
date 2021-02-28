@@ -158,9 +158,8 @@ public class Utils {
             if(!swimsRight) xSpawn = FXGL.getAppWidth() + xSpawnOffset;
             Vec2 vec2Corner = Utils.getRectangleCornerPosition(xSpawn, ySpawn, 54, 49);
             FishAnimationComponent anim = new FishAnimationComponent(swimsRight);
-            Entity fish;
-            if(anim.type == FishType.BIG)
-            {
+            Entity fish = new Entity();
+            if(anim.type == FishType.BIG) {
                 fish = FXGL.entityBuilder()
                         .type(Aquatale.EntityType.ENEMY)
                         .at(new Vec2(xSpawn, ySpawn))
@@ -169,14 +168,22 @@ public class Utils {
                         .viewWithBBox(new Rectangle(54, 49, Color.TRANSPARENT))
                         .buildAndAttach();
             }
-            else
-            {
+            else if(anim.type == FishType.DART) {
                 fish = FXGL.entityBuilder()
                         .type(Aquatale.EntityType.FISH)
                         .at(new Vec2(xSpawn, ySpawn))
                         .with(anim)
                         .collidable()
-                        .viewWithBBox(new Rectangle(54, 49, Color.TRANSPARENT))
+                        .viewWithBBox(new Rectangle(39, 20, Color.TRANSPARENT))
+                        .buildAndAttach();
+            }
+            else if(anim.type == FishType.REGULAR) {
+                fish = FXGL.entityBuilder()
+                        .type(Aquatale.EntityType.FISH)
+                        .at(new Vec2(xSpawn, ySpawn))
+                        .with(anim)
+                        .collidable()
+                        .viewWithBBox(new Rectangle(32, 32, Color.TRANSPARENT))
                         .buildAndAttach();
             }
             main.fish.add(fish);
@@ -198,7 +205,7 @@ public class Utils {
 
         Rectangle r = new Rectangle(FXGL.getAppWidth() * main.multiplier, FXGL.getAppHeight() * main.multiplier);
         Circle mouseLight = new Circle(mousePos.getX(), mousePos.getY(),100, Color.BLACK);
-        Circle playerLight = new Circle(playerPos.getX(), playerPos.getY(),100, Color.BLACK);
+        Circle playerLight = new Circle(playerPos.getX(), playerPos.getY(),125, Color.BLACK);
         Shape flashlight = Shape.subtract(r, Shape.union(mouseLight, playerLight));
 
         flashlight.setStroke(Color.YELLOW);
