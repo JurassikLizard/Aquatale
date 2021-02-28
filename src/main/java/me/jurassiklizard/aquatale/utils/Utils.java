@@ -5,6 +5,7 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import javafx.scene.shape.Rectangle;
 import me.jurassiklizard.aquatale.Aquatale;
+import me.jurassiklizard.aquatale.comonents.AnimationComponent;
 import me.jurassiklizard.aquatale.enums.MoveDirection;
 
 public class Utils {
@@ -63,10 +64,18 @@ public class Utils {
     }
 
     public static void move(Entity entity, MoveDirection direction){
-        if(direction == MoveDirection.LEFT && !isOutsideScreenLeft(entity)) entity.translateX(-5);
-        if(direction == MoveDirection.UP && !isOutsideScreenUp(entity)) entity.translateY(-5);;
-        if(direction == MoveDirection.RIGHT && !isOutsideScreenRight(entity)) entity.translateX(5);
-        if(direction == MoveDirection.DOWN && !isOutsideScreenDown(entity)) entity.translateY(5);
+        if(direction == MoveDirection.LEFT && !isOutsideScreenLeft(entity)){
+            main.getPlayer().getComponent(AnimationComponent.class).moveLeft();
+        }
+        if(direction == MoveDirection.UP && !isOutsideScreenUp(entity)) {
+            main.getPlayer().getComponent(AnimationComponent.class).moveUp();
+        }
+        if(direction == MoveDirection.RIGHT && !isOutsideScreenRight(entity)){
+            main.getPlayer().getComponent(AnimationComponent.class).moveRight();
+        }
+        if(direction == MoveDirection.DOWN && !isOutsideScreenDown(entity)){
+            main.getPlayer().getComponent(AnimationComponent.class).moveDown();
+        }
     }
 
     public static boolean isInsideScreen(Entity entity){

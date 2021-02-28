@@ -16,11 +16,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import me.jurassiklizard.aquatale.comonents.AnimationComponent;
 import me.jurassiklizard.aquatale.enums.MoveDirection;
 import me.jurassiklizard.aquatale.utils.BoundingBox;
 import me.jurassiklizard.aquatale.utils.Utils;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Aquatale extends GameApplication {
     private Entity player;
@@ -36,6 +38,8 @@ public class Aquatale extends GameApplication {
         gameSettings.setTitle("Aquatale");
         gameSettings.setVersion("0.1");
         gameSettings.setIntroEnabled(false);
+        //gameSettings.setProfilingEnabled(true);
+        gameSettings.setCredits(List.of("UnsocialSamurott", "JurassikLizard", "https://github.com/JurassikLizard/Aquatale"));
     }
 
 
@@ -56,12 +60,12 @@ public class Aquatale extends GameApplication {
                 .buildAndAttach();
         player = FXGL.entityBuilder()
                 .at(Utils.getRectangleCornerPosition(center.x, center.y, rectangle))
-                .view(rectangle)
+                .with(new AnimationComponent())
                 .buildAndAttach();
 
         FXGL.getGameScene().setCursor(Cursor.DEFAULT);
         FXGL.getGameScene().setBackgroundRepeat("background.png");
-        entityViews.put(player, new BoundingBox(rectangle.getWidth(), rectangle.getHeight()));
+        entityViews.put(player, new BoundingBox(80, 80));
         entityViews.put(light, new BoundingBox(r.getWidth(), r.getHeight()));
 
         // Sound
@@ -85,7 +89,6 @@ public class Aquatale extends GameApplication {
 
         FXGL.onKey(KeyCode.S, () -> {
             Utils.move(player, MoveDirection.DOWN); // move down 5 pixels
-            Input input = FXGL.getInput();
         });
     }
 
