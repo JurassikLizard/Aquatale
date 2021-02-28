@@ -18,14 +18,14 @@ public class Utils {
      * @param box The bounding box of the entity
      */
     public static Vec2 getRectangleCenterPosition(double x, double y, BoundingBox box){
-        x -= box.getWidth() / 2.0;
-        y -= box.getHeight() / 2.0;
+        x += box.getWidth() / 2.0;
+        y += box.getHeight() / 2.0;
         return new Vec2(x, y);
     }
 
     public static Vec2 getRectangleCenterPosition(double x, double y, double recWidth, double recHeight){
-        x -= recWidth / 2.0;
-        y -= recHeight / 2.0;
+        x += recWidth / 2.0;
+        y += recHeight / 2.0;
         return new Vec2(x, y);
     }
 
@@ -36,7 +36,19 @@ public class Utils {
      * @param rectangle The rectangle of whos location you want to get the center of
      */
     public static Vec2 getRectangleCenterPosition(double x, double y, Rectangle rectangle){
-        x -= rectangle.getWidth() / 2.0;
+        x += rectangle.getHeight() / 2.0;
+        y += rectangle.getHeight() / 2.0;
+        return new Vec2(x, y);
+    }
+
+    /**
+     * Gets the location at the center of the given rectangle
+     * @param x The location of the object on the x coordinate-plane
+     * @param y The location of the object on the y coordinate-plane
+     * @param rectangle The rectangle of whos location you want to get the corner of
+     */
+    public static Vec2 getRectangleCornerPosition(double x, double y, Rectangle rectangle){
+        x -= rectangle.getHeight() / 2.0;
         y -= rectangle.getHeight() / 2.0;
         return new Vec2(x, y);
     }
