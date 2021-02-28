@@ -9,6 +9,8 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.Input;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.Glow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -101,6 +103,13 @@ public class Aquatale extends GameApplication {
         Circle mouseLight = new Circle(mousePos.getX(), mousePos.getY(),100, Color.BLACK);
         Circle playerLight = new Circle(playerPos.getX(), playerPos.getY(),100, Color.BLACK);
         Shape flashlight = Shape.subtract(r, Shape.union(mouseLight, playerLight));
+
+        flashlight.setStroke(Color.YELLOW);
+//        Glow glow = new Glow();
+//        glow.setLevel(50);
+        GaussianBlur blur = new GaussianBlur();
+        blur.setRadius(5);
+        flashlight.setEffect(blur);
 
         light = FXGL.entityBuilder()
                 .at(new Vec2(0, 0))
