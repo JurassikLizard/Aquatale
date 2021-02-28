@@ -15,6 +15,7 @@ import javafx.scene.shape.Shape;
 import me.jurassiklizard.aquatale.Aquatale;
 import me.jurassiklizard.aquatale.components.FishAnimationComponent;
 import me.jurassiklizard.aquatale.components.PlayerAnimationComponent;
+import me.jurassiklizard.aquatale.enums.FishType;
 import me.jurassiklizard.aquatale.enums.MoveDirection;
 
 import java.util.Random;
@@ -149,21 +150,35 @@ public class Utils {
                 return;
             }
 
-            int ySpawn = FXGL.random(0, FXGL.getAppHeight());
+            int ySpawn = FXGL.random(0, FXGL.getAppHeight() - 25);
             int xSpawnOffset = 10;
             boolean swimsRight = new Random().nextBoolean();
             int xSpawn = 0;
             if(swimsRight) xSpawn = -1 * xSpawnOffset;
             if(!swimsRight) xSpawn = FXGL.getAppWidth() + xSpawnOffset;
             Vec2 vec2Corner = Utils.getRectangleCornerPosition(xSpawn, ySpawn, 54, 49);
-
-            Entity fish = FXGL.entityBuilder()
-                    .at(new Vec2(xSpawn, ySpawn))
-                    .with(new CollidableComponent(true))
-                    .with(new FishAnimationComponent(swimsRight))
-                    .viewWithBBox(new Rectangle(54, 49, Color.TRANSPARENT))
-                    .buildAndAttach();
-
+            FishAnimationComponent anim = new FishAnimationComponent(swimsRight);
+            Entity fish;
+            if(anim.type == FishType.BIG)
+            {
+                fish = FXGL.entityBuilder()
+                        .type(Aquatale.EntityType.ENEMY)
+                        .at(new Vec2(xSpawn, ySpawn))
+                        .with(anim)
+                        .collidable()
+                        .viewWithBBox(new Rectangle(54, 49, Color.TRANSPARENT))
+                        .buildAndAttach();
+            }
+            else
+            {
+                fish = FXGL.entityBuilder()
+                        .type(Aquatale.EntityType.FISH)
+                        .at(new Vec2(xSpawn, ySpawn))
+                        .with(anim)
+                        .collidable()
+                        .viewWithBBox(new Rectangle(54, 49, Color.TRANSPARENT))
+                        .buildAndAttach();
+            }
             main.fish.add(fish);
             fishCounter = 0.0;
             return;
