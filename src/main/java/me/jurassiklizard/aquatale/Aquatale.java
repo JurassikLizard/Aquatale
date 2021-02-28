@@ -10,26 +10,27 @@ import com.almasb.fxgl.input.Input;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.effect.Glow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import me.jurassiklizard.aquatale.comonents.AnimationComponent;
+import me.jurassiklizard.aquatale.components.PlayerAnimationComponent;
 import me.jurassiklizard.aquatale.enums.MoveDirection;
 import me.jurassiklizard.aquatale.utils.BoundingBox;
 import me.jurassiklizard.aquatale.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Aquatale extends GameApplication {
-    private Entity player;
-    private Entity light;
-    private HashMap<Entity, BoundingBox> entityViews = new HashMap<>();
+    public Entity player;
+    public Entity light;
+    public HashMap<Entity, BoundingBox> entityViews = new HashMap<>();
+    public ArrayList<Entity> fish = new ArrayList<>();
     public static Aquatale instance;
-    private int multiplier = 3;
+    public int multiplier = 3;
 
     @Override
     protected void initSettings(GameSettings gameSettings) {
@@ -60,7 +61,7 @@ public class Aquatale extends GameApplication {
                 .buildAndAttach();
         player = FXGL.entityBuilder()
                 .at(Utils.getRectangleCornerPosition(center.x, center.y, rectangle))
-                .with(new AnimationComponent())
+                .with(new PlayerAnimationComponent())
                 .buildAndAttach();
 
         FXGL.getGameScene().setCursor(Cursor.DEFAULT);
@@ -94,30 +95,8 @@ public class Aquatale extends GameApplication {
 
     @Override
     protected void onUpdate(double tpf){
-        light.removeFromWorld();
-        entityViews.remove(light);
-
-        Input input = FXGL.getInput();
-        Point2D mousePos = input.getMousePositionWorld();
-        Vec2 vec2PlayerPos = Utils.getRectangleCenterPosition(player.getX(), player.getY(), entityViews.get(player));
-        Point2D playerPos = new Point2D(vec2PlayerPos.x, vec2PlayerPos.y);
-
-        Rectangle r = new Rectangle(FXGL.getAppWidth() * multiplier, FXGL.getAppHeight() * multiplier);
-        Circle mouseLight = new Circle(mousePos.getX(), mousePos.getY(),100, Color.BLACK);
-        Circle playerLight = new Circle(playerPos.getX(), playerPos.getY(),100, Color.BLACK);
-        Shape flashlight = Shape.subtract(r, Shape.union(mouseLight, playerLight));
-
-        flashlight.setStroke(Color.YELLOW);
-//        Glow glow = new Glow();
-//        glow.setLevel(50);
-        GaussianBlur blur = new GaussianBlur();
-        blur.setRadius(5);
-        flashlight.setEffect(blur);
-
-        light = FXGL.entityBuilder()
-                .at(new Vec2(0, 0))
-                .view(flashlight)
-                .buildAndAttach();
+        Utils.spawnFish(tpf);
+        Utils.updateFlashLights();
     }
 
 

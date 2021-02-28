@@ -1,6 +1,5 @@
-package me.jurassiklizard.aquatale.comonents;
+package me.jurassiklizard.aquatale.components;
 
-import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.core.math.Vec2;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
@@ -9,13 +8,13 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
-public class AnimationComponent extends Component {
+public class PlayerAnimationComponent extends Component {
     private Vec2 speed = new Vec2(0, 0);
 
     private AnimatedTexture texture;
     private AnimationChannel animIdle, animSwim;
 
-    public AnimationComponent(){
+    public PlayerAnimationComponent(){
         animIdle = new AnimationChannel(FXGL.image("player-idle.png"), 6, 80, 80, Duration.seconds(1), 0, 5);
         animSwim = new AnimationChannel(FXGL.image("player-swiming.png"), 7, 80, 80, Duration.seconds(1), 0, 6);
 
