@@ -25,8 +25,6 @@ public class Aquatale extends GameApplication {
     private Entity light;
     private HashMap<Entity, BoundingBox> entityViews = new HashMap<>();
     public static Aquatale instance;
-    private int totalBlackScreenWidth;
-    private int totalBlackScreenHeight;
     private int multiplier = 3;
 
     @Override
@@ -42,18 +40,16 @@ public class Aquatale extends GameApplication {
     @Override
     protected void initGame() {
         instance = this;
-        totalBlackScreenWidth = FXGL.getAppWidth() * multiplier;
-        totalBlackScreenHeight = FXGL.getAppHeight() * multiplier;
 
         Rectangle rectangle = new Rectangle(25, 25, Color.BLUE);
         Vec2 center = Utils.getCenterScreen();
-        Rectangle r = new Rectangle(totalBlackScreenWidth, totalBlackScreenHeight);
+        Rectangle r = new Rectangle(FXGL.getAppWidth() * multiplier, FXGL.getAppHeight() * multiplier);
         Circle mouseLight = new Circle(center.x * multiplier,center.y * multiplier,100, Color.BLACK);
-        Circle playerLight = new Circle(multiplier*center.x,multiplier*center.y,100, Color.BLACK);
+        Circle playerLight = new Circle(multiplier * center.x,multiplier * center.y,100, Color.BLACK);
         Shape flashlight = Shape.subtract(r, Shape.union(mouseLight, playerLight));
 
         light = FXGL.entityBuilder()
-                .at(Utils.getRectangleCornerPosition(center.x, center.y, r))
+                .at(new Vec2(0, 0))
                 .view(flashlight)
                 .buildAndAttach();
         player = FXGL.entityBuilder()
@@ -98,19 +94,17 @@ public class Aquatale extends GameApplication {
 
         Input input = FXGL.getInput();
         Point2D mousePos = input.getMousePositionWorld();
-        Point2D playerPos = player.getPosition();
+        Vec2 vec2PlayerPos = Utils.getRectangleCenterPosition(player.getX(), player.getY(), entityViews.get(player));
+        Point2D playerPos = new Point2D(vec2PlayerPos.x, vec2PlayerPos.y);
 
-        Rectangle r = new Rectangle(FXGL.getAppWidth()*multiplier, FXGL.getAppHeight()*multiplier);
-        //Circle mouseLight = new Circle(mousePos.getX() + (FXGL.getAppWidth() * ((multiplier - 1) / 2.0)), mousePos.getY() + (FXGL.getAppHeight() * ((multiplier - 1) / 2.0)),100, Color.BLACK);
-        //Circle playerLight = new Circle(playerPos.getX() + (FXGL.getAppWidth() * ((multiplier - 1) / 2.0)), playerPos.getY() + (FXGL.getAppHeight() * ((multiplier - 1) / 2.0)),100, Color.BLACK);
-        Circle mouseLight = new Circle(mousePos.getX() + FXGL.getAppWidth(), mousePos.getY() + FXGL.getAppHeight(),100, Color.BLACK);
-        Circle playerLight = new Circle(playerPos.getX() + FXGL.getAppWidth(), playerPos.getY() + FXGL.getAppHeight(),100, Color.BLACK);
-        Shape r2 = Shape.subtract(r, mouseLight);
-        Shape r3 = Shape.subtract(r2, playerLight);
+        Rectangle r = new Rectangle(FXGL.getAppWidth() * multiplier, FXGL.getAppHeight() * multiplier);
+        Circle mouseLight = new Circle(mousePos.getX(), mousePos.getY(),100, Color.BLACK);
+        Circle playerLight = new Circle(playerPos.getX(), playerPos.getY(),100, Color.BLACK);
+        Shape flashlight = Shape.subtract(r, Shape.union(mouseLight, playerLight));
 
         light = FXGL.entityBuilder()
-                .at(Utils.getRectangleCornerPosition(Utils.getCenterScreen().x, Utils.getCenterScreen().y, r))
-                .view(r3)
+                .at(new Vec2(0, 0))
+                .view(flashlight)
                 .buildAndAttach();
     }
 
