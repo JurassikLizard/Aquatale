@@ -92,7 +92,8 @@ public class Aquatale extends GameApplication {
         gameSettings.setWidth(960);
         gameSettings.setHeight(540);
         gameSettings.setTitle("Aquatale");
-        gameSettings.setVersion("0.1");
+        gameSettings.setVersion("1.0.0-Release");
+        gameSettings.setAppIcon("icon.png");
         gameSettings.setIntroEnabled(false);
         //gameSettings.setProfilingEnabled(true);
         gameSettings.setCredits(List.of("UnsocialSamurott", "JurassikLizard", "https://github.com/JurassikLizard/Aquatale"));
@@ -177,6 +178,34 @@ public class Aquatale extends GameApplication {
         });
 
         FXGL.onKey(KeyCode.S, () -> {
+            if(player.getBottomY() < FXGL.getAppHeight())
+            {
+                Utils.move(player, MoveDirection.DOWN); // move down 5 pixels
+            }
+        });
+
+        FXGL.onKey(KeyCode.RIGHT, () -> {
+            if(player.getRightX() < FXGL.getAppWidth())
+            {
+                Utils.move(player, MoveDirection.RIGHT); // move right 5 pixels
+            }
+        });
+
+        FXGL.onKey(KeyCode.LEFT, () -> {
+            if(player.getX() > 0)
+            {
+                Utils.move(player, MoveDirection.LEFT); // move left 5 pixels
+            }
+        });
+
+        FXGL.onKey(KeyCode.UP, () -> {
+            if(player.getY() > 0)
+            {
+                Utils.move(player, MoveDirection.UP); // move up 5 pixels
+            }
+        });
+
+        FXGL.onKey(KeyCode.DOWN, () -> {
             if(player.getBottomY() < FXGL.getAppHeight())
             {
                 Utils.move(player, MoveDirection.DOWN); // move down 5 pixels
