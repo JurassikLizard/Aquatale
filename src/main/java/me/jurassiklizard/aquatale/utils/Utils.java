@@ -102,44 +102,26 @@ public class Utils {
         }
     }
 
-    public static boolean isInsideScreen(Entity entity){
-        boolean left = entity.getX() < 0 || entity.getX() - moveDistance < 0;
-        boolean up = entity.getY() < 0 || entity.getY() - moveDistance < 0;
-        boolean right = entity.getX() > FXGL.getGameScene().getAppWidth() || entity.getX() + moveDistance > FXGL.getGameScene().getAppWidth();
-        boolean down = entity.getY() > FXGL.getGameScene().getAppHeight() || entity.getY() + moveDistance > FXGL.getGameScene().getAppHeight();
-
-        if(left || up || right || down) return false;
-        return true;
-    }
-
     public static boolean isOutsideScreenLeft(Entity entity){
-        if(entity.getX() < 0 || entity.getX() - moveDistance < 0)
-            return true;
-        return false;
+        return entity.getX() < 0 || entity.getX() - moveDistance < 0;
     }
 
     public static boolean isOutsideScreenUp(Entity entity){
-        if(entity.getY() < 0 || entity.getY() - moveDistance < 0)
-            return true;
-        return false;
+        return entity.getY() < 0 || entity.getY() - moveDistance < 0;
     }
 
     public static boolean isOutsideScreenRight(Entity entity){
         BoundingBox box = main.getEntityViews().get(entity);
         double width = box.getWidth();
         double x = entity.getX() + width;
-        if(x > FXGL.getGameScene().getAppWidth() || x + moveDistance > FXGL.getGameScene().getAppWidth())
-            return true;
-        return false;
+        return x > FXGL.getGameScene().getAppWidth() || x + moveDistance > FXGL.getGameScene().getAppWidth();
     }
 
     public static boolean isOutsideScreenDown(Entity entity){
         BoundingBox box = main.getEntityViews().get(entity);
         double height = box.getHeight();
         double y = entity.getY() + height;
-        if(y > FXGL.getGameScene().getAppHeight() || y + moveDistance > FXGL.getGameScene().getAppHeight())
-            return true;
-        return false;
+        return y > FXGL.getGameScene().getAppHeight() || y + moveDistance > FXGL.getGameScene().getAppHeight();
     }
 
     public static void spawnFish(double tpf){
@@ -209,8 +191,6 @@ public class Utils {
         Shape flashlight = Shape.subtract(r, Shape.union(mouseLight, playerLight));
 
         flashlight.setStroke(Color.YELLOW);
-//        Glow glow = new Glow();
-//        glow.setLevel(50);
         GaussianBlur blur = new GaussianBlur();
         blur.setRadius(5);
         flashlight.setEffect(blur);

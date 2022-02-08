@@ -95,7 +95,6 @@ public class Aquatale extends GameApplication {
         gameSettings.setVersion("1.0.0-Release");
         gameSettings.setAppIcon("icon.png");
         gameSettings.setIntroEnabled(false);
-        //gameSettings.setProfilingEnabled(true);
         gameSettings.setCredits(List.of("UnsocialSamurott", "JurassikLizard", "https://github.com/JurassikLizard/Aquatale"));
     }
 
